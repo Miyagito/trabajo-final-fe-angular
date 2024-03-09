@@ -1,0 +1,9 @@
+<div class="accordion" id="categorias">
+  <app-accordion-item
+    *ngFor="let category of categories; let i = index"
+    [category]="category"
+    [expanded]="expandedIndex === i"
+    (toggle)="handleToggle(i)"
+    (addProduct)="addProductToCart.emit($event)"
+  ></app-accordion-item>
+</div>

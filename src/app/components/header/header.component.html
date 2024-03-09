@@ -1,0 +1,21 @@
+<header class="header">
+  <h2>Productos Disponibles</h2>
+  <section class="btn-group" role="group" aria-label="Admin options">
+    <button
+      *ngIf="isAdmin; else activateButton"
+      class="btn btn-outline-secondary btn-sm"
+      (click)="toggleAdminMode.emit()"
+    >
+      Desactivar Modo Admin
+    </button>
+    <ng-template #activateButton>
+      <button
+        class="btn btn-outline-success btn-sm"
+        (click)="handleAdminButtonClick()"
+      >
+        Activar Modo Admin
+      </button>
+    </ng-template>
+  </section>
+  <p *ngIf="error" class="text-danger">{{ error }}</p>
+</header>
