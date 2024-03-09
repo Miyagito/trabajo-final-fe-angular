@@ -1,0 +1,40 @@
+.accordion-body div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 0.5px solid grey;
+  margin-bottom: -0.5px;
+  padding: 0 2%;
+}
+
+section {
+  flex-direction: column;
+}
+
+section p {
+  margin-bottom: 0;
+}
+
+section p:first-of-type {
+  font-weight: bold;
+}
+
+.accordion-body div img {
+  margin-right: 10px;
+  padding: 2% 0;
+  z-index: 10;
+  transition: transform 0.3s ease;
+  transform-origin: center center;
+}
+
+.accordion-body div section img:hover {
+  transform: scale(2.3);
+  z-index: 10;
+  position: relative;
+}
+
+.accordion-collapse {
+  overflow: visible;
+  transition: max-height 0.5s ease;
+  max-height: 0;
+}
