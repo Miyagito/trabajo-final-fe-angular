@@ -21,9 +21,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.dataService.getCategorias().subscribe(
       (response: CategoriasResponse) => {
-        // Usa la interfaz en la respuesta
-        console.log('Categorias recibidas:', response);
-        this.categories = response.categorias; // Ahora puedes acceder a 'categorias' sin problemas
+        this.categories = response.categorias;
       },
       (error) => {
         console.error('Error fetching categories', error);
@@ -37,7 +35,5 @@ export class AppComponent implements OnInit {
   handleToggleAdminMode(isAdmin: boolean): void {
     this.isAdmin = isAdmin;
   }
-  handleAddProductToCart(product: Producto): void {
-    // Tu código para manejar el evento va aquí.
-  }
+  handleAddProductToCart(product: Producto): void {}
 }

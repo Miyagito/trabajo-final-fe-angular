@@ -6,22 +6,18 @@
       type="button"
       (click)="toggleExpansion()"
       [attr.aria-expanded]="expanded"
+      [attr.aria-controls]="'collapse' + category.nombre"
     >
       {{ category.nombre }}
     </button>
   </h2>
-  <div
-    *ngIf="expanded"
-    id="collapse{{ category.nombre }}"
-    class="accordion-collapse collapse show"
-  >
+  <div *ngIf="expanded" [attr.id]="'collapse' + category.nombre">
     <div class="accordion-body">
       <ng-container *ngFor="let producto of category.productos">
         <div>
           <section>
             <p>{{ producto.descripcion }}</p>
             <p>Precio: {{ producto.precio | currency }}</p>
-            <!-- El stock y el código deberían venir del modelo de producto o un servicio -->
             <p>Código: {{ producto.codigo }}</p>
           </section>
           <section>
