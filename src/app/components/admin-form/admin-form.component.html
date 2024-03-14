@@ -1,1 +1,173 @@
-<p>admin-form works!</p>
+<form [formGroup]="adminForm" (ngSubmit)="onSubmit()">
+  <div *ngIf="adminForm.errors" class="alert alert-danger">
+    Por favor, verifica los campos.
+  </div>
+
+  <div class="mb-3">
+    <label for="nombreCategoria" class="form-label"
+      >Nombre de la categoría</label
+    >
+    <input
+      formControlName="nombreCategoria"
+      type="text"
+      class="form-control"
+      id="nombreCategoria"
+      placeholder="Nombre de la categoría"
+    />
+    <div
+      *ngIf="
+        adminForm.get('nombreCategoria')!.touched &&
+        adminForm.get('nombreCategoria')!.invalid
+      "
+      class="alert alert-danger"
+    >
+      Este campo es obligatorio.
+    </div>
+  </div>
+  <button type="button" class="btn btn-primary" (click)="onAddCategory()">
+    Agregar Categoría
+  </button>
+
+  <h3 class="mt-4 mb-4">Añadir Producto</h3>
+
+  <div class="mb-3">
+    <label for="categoriaProducto" class="form-label"
+      >Categoría del producto</label
+    >
+    <select
+      formControlName="categoriaProducto"
+      class="form-select"
+      id="categoriaProducto"
+      required
+    >
+      <option value="" disabled>Seleccione una categoría</option>
+      <option *ngFor="let categoria of categories" [ngValue]="categoria.nombre">
+        {{ categoria.nombre }}
+      </option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="descripcion" class="form-label">Descripción del producto</label>
+    <input
+      formControlName="descripcion"
+      type="text"
+      class="form-control"
+      id="descripcion"
+      placeholder="Descripción del producto"
+    />
+    <div
+      *ngIf="
+        adminForm.get('nombreCategoria')!.touched &&
+        adminForm.get('nombreCategoria')!.invalid
+      "
+      class="alert alert-danger"
+    >
+      Este campo es obligatorio.
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="precio" class="form-label">Precio del producto</label>
+    <input
+      formControlName="precio"
+      type="number"
+      class="form-control"
+      id="precio"
+      placeholder="Precio del producto"
+    />
+    <div
+      *ngIf="
+        adminForm.get('nombreCategoria')!.touched &&
+        adminForm.get('nombreCategoria')!.invalid
+      "
+      class="alert alert-danger"
+    >
+      <div *ngIf="adminForm.get('precio')!.errors?.['required']">
+        Este campo es obligatorio.
+      </div>
+      <div *ngIf="adminForm.get('precio')!.errors?.['min']">
+        El precio debe ser mayor a 0.
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="stock" class="form-label">Stock del producto</label>
+    <input
+      formControlName="stock"
+      type="number"
+      class="form-control"
+      id="stock"
+      placeholder="Stock del producto"
+    />
+    <div
+      *ngIf="
+        adminForm.get('nombreCategoria')!.touched &&
+        adminForm.get('nombreCategoria')!.invalid
+      "
+      class="alert alert-danger"
+    >
+      <div *ngIf="adminForm.get('stock')!.errors?.['required']">
+        Este campo es obligatorio.
+      </div>
+      <div *ngIf="adminForm.get('stock')!.errors?.['min']">
+        El stock no puede ser negativo.
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="codigo" class="form-label">Código del producto</label>
+    <input
+      formControlName="codigo"
+      type="text"
+      class="form-control"
+      id="codigo"
+      placeholder="Código del producto"
+    />
+    <div
+      *ngIf="
+        adminForm.get('nombreCategoria')!.touched &&
+        adminForm.get('nombreCategoria')!.invalid
+      "
+      class="alert alert-danger"
+    >
+      Este campo es obligatorio.
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="imagen" class="form-label">URL de la imagen del producto</label>
+    <input
+      formControlName="imagen"
+      type="text"
+      class="form-control"
+      id="imagen"
+      placeholder="URL de la imagen del producto"
+    />
+    <div
+      *ngIf="
+        adminForm.get('nombreCategoria')!.touched &&
+        adminForm.get('nombreCategoria')!.invalid
+      "
+      class="alert alert-danger"
+    >
+      Este campo es obligatorio.
+    </div>
+  </div>
+
+  <button
+    type="submit"
+    class="btn btn-success"
+    [disabled]="
+      !adminForm.get('categoriaProducto')!.value ||
+      adminForm.get('descripcion')!.invalid ||
+      adminForm.get('precio')!.invalid ||
+      adminForm.get('stock')!.invalid ||
+      adminForm.get('codigo')!.invalid ||
+      adminForm.get('imagen')!.invalid
+    "
+  >
+    Añadir Producto
+  </button>
+</form>

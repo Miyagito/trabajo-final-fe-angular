@@ -2,26 +2,34 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from './services/data.services';
 import { Categoria } from './models/categoria.model';
 import { Producto } from './models/producto.model';
-import { CategoriasResponse } from './models/categorias-response.model';
 import { HeaderComponent } from './components/header/header.component';
 import { CategoryAccordionComponent } from './components/category-accordion/category-accordion.component';
+import { AdminFormComponent } from './components/admin-form/admin-form.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  imports: [HeaderComponent, CategoryAccordionComponent],
+  imports: [
+    HeaderComponent,
+    CategoryAccordionComponent,
+    AdminFormComponent,
+    CommonModule,
+  ],
 })
 export class AppComponent implements OnInit {
   categories: Categoria[] = [];
+  selectedCategory: string | null = null;
+  isAdmin: boolean = false;
 
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    this.dataService.getCategorias().subscribe(
-      (response: CategoriasResponse) => {
-        this.categories = response.categorias;
+    this.dataService.categorias$.subscribe(
+      (categorias) => {
+        this.categories = categorias;
       },
       (error) => {
         console.error('Error fetching categories', error);
@@ -29,11 +37,20 @@ export class AppComponent implements OnInit {
     );
   }
 
-  title = 'trabajo_final_angular';
-  isAdmin = false;
-
-  handleToggleAdminMode(isAdmin: boolean): void {
-    this.isAdmin = isAdmin;
+  handleAddCategory(nombreCategoria: string): void {
+    this.dataService.addCategoria(nombreCategoria);
+    this.dataService.getCategorias().subscribe((categorias) => {
+      this.categories = categorias;
+    });
   }
-  handleAddProductToCart(product: Producto): void {}
+
+  handleAddProduct(data: { producto: Producto; categoria: string }): void {
+    this.dataService.addProducto(data.categoria, data.producto);
+  }
+
+  handleAddProductToCart(producto: Producto): void {}
+
+  toggleAdminMode(): void {
+    this.isAdmin = !this.isAdmin;
+  }
 }
