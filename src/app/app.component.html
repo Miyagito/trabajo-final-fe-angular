@@ -1,19 +1,22 @@
 <div class="main-container">
-  <app-header
-    (toggleAdminMode)="toggleAdminMode()"
-    [isAdmin]="isAdmin"
-  ></app-header>
-  <section *ngIf="isAdmin; else categoryAccordion" class="left-section">
-    <app-admin-form
-      (addCategory)="handleAddCategory($event)"
-      (addProduct)="handleAddProduct($event)"
-      [categories]="categories"
-    ></app-admin-form>
-  </section>
-  <ng-template #categoryAccordion>
-    <app-category-accordion
-      [categories]="categories"
-      (addProductToCart)="handleAddProductToCart($event)"
-    ></app-category-accordion>
-  </ng-template>
+  <div class="left-container">
+    <app-header
+      (toggleAdminMode)="toggleAdminMode()"
+      [isAdmin]="isAdmin"
+    ></app-header>
+    <section *ngIf="isAdmin; else categoryAccordion" class="left-section">
+      <app-admin-form
+        (addCategory)="handleAddCategory($event)"
+        (addProduct)="handleAddProduct($event)"
+        [categories]="categories"
+      ></app-admin-form>
+    </section>
+    <ng-template #categoryAccordion>
+      <app-category-accordion
+        [categories]="categories"
+        (addProductToCart)="handleAddProductToCart($event)"
+      ></app-category-accordion>
+    </ng-template>
+  </div>
+  <app-shopping-cart></app-shopping-cart>
 </div>

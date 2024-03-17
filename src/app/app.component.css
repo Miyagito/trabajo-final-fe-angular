@@ -1,1 +1,16 @@
+.main-container {
+  display: flex;
+}
 
+.left-container {
+  width: 65%;
+  padding: 1rem;
+}
+
+ng-template {
+  width: 35%;
+}
+
+app-shopping-cart {
+  padding: 1rem;
+}

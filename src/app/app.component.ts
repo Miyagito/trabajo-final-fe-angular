@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from './services/data.services';
 import { Categoria } from './models/categoria.model';
 import { Producto } from './models/producto.model';
@@ -6,6 +6,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { CategoryAccordionComponent } from './components/category-accordion/category-accordion.component';
 import { AdminFormComponent } from './components/admin-form/admin-form.component';
 import { CommonModule } from '@angular/common';
+import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 
 @Component({
   selector: 'app-root',
@@ -17,9 +18,12 @@ import { CommonModule } from '@angular/common';
     CategoryAccordionComponent,
     AdminFormComponent,
     CommonModule,
+    ShoppingCartComponent,
   ],
 })
 export class AppComponent implements OnInit {
+  @ViewChild(ShoppingCartComponent)
+  private shoppingCartComponent!: ShoppingCartComponent;
   categories: Categoria[] = [];
   selectedCategory: string | null = null;
   isAdmin: boolean = false;
@@ -48,7 +52,11 @@ export class AppComponent implements OnInit {
     this.dataService.addProducto(data.categoria, data.producto);
   }
 
-  handleAddProductToCart(producto: Producto): void {}
+  handleAddProductToCart(producto: Producto): void {
+    Promise.resolve().then(() =>
+      this.shoppingCartComponent.addProductToCart(producto)
+    );
+  }
 
   toggleAdminMode(): void {
     this.isAdmin = !this.isAdmin;

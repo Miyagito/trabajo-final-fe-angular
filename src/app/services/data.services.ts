@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 export class DataService {
   private dataUrl = 'assets/data/categorias.json';
   private categoriasSubject = new BehaviorSubject<Categoria[]>([]);
-
+  private productos: Producto[] = [];
   categorias$ = this.categoriasSubject.asObservable();
 
   constructor(private http: HttpClient) {
@@ -20,6 +20,17 @@ export class DataService {
       (response) => this.categoriasSubject.next(response.categorias),
       (err) => console.error('Error loading initial data', err)
     );
+  }
+
+  private findProductByCodigo(codigo: string): Producto | undefined {
+    return this.productos.find((producto) => producto.codigo === codigo);
+  }
+
+  updateProductStock(codigo: string, delta: number) {
+    const producto = this.findProductByCodigo(codigo);
+    if (producto) {
+      producto.stock += delta;
+    }
   }
 
   getCategorias() {
