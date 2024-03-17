@@ -1,1 +1,33 @@
-<p>shopping-cart works!</p>
+<div class="container">
+  <h2>Cesta de la compra</h2>
+  <ng-container *ngIf="productosCarrito.length; else emptyCart">
+    <div *ngFor="let item of productosCarrito">
+      <p class="producto-title">{{ item.producto.descripcion }}</p>
+      <div class="producto-info">
+        <div class="producto-detalles">
+          <p>Precio: {{ item.producto.precio | currency }}</p>
+          <p>Código: {{ item.producto.codigo }}</p>
+          <p>Cantidad: {{ item.cantidad }}</p>
+          <div class="producto-acciones">
+            <button
+              class="btn btn-primary"
+              (click)="deleteProductfromCart(item.producto.codigo)"
+            >
+              Eliminar de la cesta
+            </button>
+          </div>
+        </div>
+        <img [src]="item.producto.imagen" [alt]="item.producto.descripcion" />
+      </div>
+    </div>
+    <div class="total-container" *ngIf="productosCarrito.length > 0">
+      <h3>Total de la compra: {{ totalCompra | currency }}</h3>
+    </div>
+    <button class="btn btn-success" (click)="realizarCompra()">
+      Realizar compra
+    </button>
+  </ng-container>
+  <ng-template #emptyCart>
+    <p>No hay productos en la cesta.</p>
+  </ng-template>
+</div>
